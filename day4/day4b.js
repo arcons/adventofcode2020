@@ -10,7 +10,7 @@ const input = contents.split(/\n\s*\n/).map((str) => str.split(/\s+/))
 // byr (Birth Year) - four digits; at least 1920 and at most 2002.
 // iyr (Issue Year) - four digits; at least 2010 and at most 2020.
 // eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
-const checkYear = (testVal, lower, upper) => {
+const checkYear = (lower, upper) => (testVal) => {
   if (upper >= parseInt(testVal) &&  parseInt(testVal) >= lower) {
     return true;
   }
@@ -62,62 +62,27 @@ const checkPID = (testVal) => {
 }
 
 
-// let codeSet = new Map()
+let codeSet = new Map()
 // cid (Country ID) - ignored, missing or not.
-// codeSet.add("byr", checkYear(...args, 1920, 2002))
-// codeSet.add("iyr", checkYear(...args, 2010, 2020))
-// codeSet.add("eyr", checkYear(...args, 2020, 2030))
-// codeSet.add("hgt", checkHeight(...args))
-// codeSet.add("hcl", checkHairColor(...args))
-// codeSet.add("ecl", checkEyeColor(...args))
-// codeSet.add("pid", checkPID(...args))
-// codeSet.add("cid")
-let codeSet = new Set()
-codeSet.add("byr")
-codeSet.add("iyr")
-codeSet.add("eyr")
-codeSet.add("hgt")
-codeSet.add("hcl")
-codeSet.add("ecl")
-codeSet.add("pid")
+codeSet.set("byr", checkYear(1920, 2002))
+codeSet.set("iyr", checkYear(2010, 2020))
+codeSet.set("eyr", checkYear(2020, 2030))
+codeSet.set("hgt", checkHeight)
+codeSet.set("hcl", checkHairColor)
+codeSet.set("ecl", checkEyeColor)
+codeSet.set("pid", checkPID)
+// codeSet.set("cid")
 
 const getValidPassports = (input, codeSet) => {
-  // ex input row ['byr:2010', 'pid:#1bb4d8', 'eyr:2021', 'hgt:186cm', 'iyr:2020', 'ecl:grt']
   let totalValid = 0
   input.forEach(entry => {
     let validCount = 0
     entry.forEach(element => {
       idData = element.split(':')
       if(codeSet.has(idData[0])) {
-        if(idData[0] === "byr") {
-          if( checkYear(idData[1], 1920, 2002)) {
-            validCount++
-        }}
-        if(idData[0] === "iyr") {
-          if( checkYear(idData[1], 2010, 2020)) {
-            validCount++
-        }}
-        if(idData[0] === "eyr") {
-          if( checkYear(idData[1], 2020, 2030)) {
-            validCount++
-        }}
-        if(idData[0] === "hgt") {
-          if( checkHeight(idData[1])) {
-            validCount++
-        }}
-        if(idData[0] === "hcl") {
-          if( checkHairColor(idData[1])) {
-            validCount++
-          }
+        if(codeSet.get(idData[0])(idData[1])) {
+          validCount++
         }
-        if(idData[0] === "ecl") {
-          if( checkEyeColor(idData[1])) {
-            validCount++
-        }}
-        if(idData[0] === "pid") {
-          if( checkPID(idData[1])) {
-            validCount++
-        }}
       }
     });
     if(validCount >= 7) {
