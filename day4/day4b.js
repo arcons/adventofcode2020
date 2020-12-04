@@ -62,7 +62,7 @@ const checkPID = (testVal) => {
 }
 
 
-let codeSet = new Map()
+const codeSet = new Map()
 // cid (Country ID) - ignored, missing or not.
 codeSet.set("byr", checkYear(1920, 2002))
 codeSet.set("iyr", checkYear(2010, 2020))
