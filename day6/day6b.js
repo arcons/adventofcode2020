@@ -1,4 +1,3 @@
-const { group } = require('console');
 const fs = require('fs')
  
 var contents = fs.readFileSync('./day6/input.txt', 'utf8');
