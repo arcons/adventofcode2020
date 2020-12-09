@@ -28,9 +28,9 @@ const runInfiteLoop = (instructionList) => {
       break
     } else {
       instructionList[index].hasRun = true;
-      index++
       const signedNumber = Math.sign(instructionList[index].instr[1])*parseInt(instructionList[index].instr[1].slice(1))
       instructionMap.get(instructionList[index].instr[0])(signedNumber)
+      index++
     }
   }
   return accumulator
