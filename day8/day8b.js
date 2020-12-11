@@ -54,6 +54,7 @@ const swapAndReset = () => {
 }
 
 const runInfiteLoop = (instructionList) => {
+  console.time();
   while(index < instructionList.length) {
     if(index< 0 || instructionList[index].hasRun) {
       instructionList = swapAndReset();
@@ -67,6 +68,7 @@ const runInfiteLoop = (instructionList) => {
       }
     }
   }
+  console.timeEnd();
   return accumulator
 }
 

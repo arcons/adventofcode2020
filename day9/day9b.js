@@ -17,17 +17,22 @@ const findSubsetSum = (minIndex, maxIndex) => {
 }
 
 
-
+console.time();
+let answer
 for(let index=0; index<input.length; index++){
+  if(answer) break
   for(let jindex=1; jindex<input.length; jindex++){
     let currentSumSet = findSubsetSum(index, jindex)
     if(currentSumSet === findThis) {
       const answerSlice = input.slice(index, jindex).sort()
       const minVal = parseInt(answerSlice[0])
       const maxVal = parseInt(answerSlice[answerSlice.length-1])
-      console.log("answer= ", (minVal+maxVal) )
+      answer = minVal+maxVal
+      console.log("answer= ", (answer) )
       break
     }
   }
 }
+console.timeEnd();
+
 

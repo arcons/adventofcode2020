@@ -1,7 +1,7 @@
 const fs = require('fs')
  
 var contents = fs.readFileSync('./day9/input.txt', 'utf8');
-const input = contents.split('\n')//.map((str) => {return {instr : str.split(' '), hasRun : false}})
+const input = contents.split('\n')
 
 const preamble = 25
 
