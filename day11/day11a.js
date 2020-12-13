@@ -113,10 +113,10 @@ const runUntilNoChange = () => {
   while (JSON.stringify(previous) != JSON.stringify(current)) {
     current = input
     previous = runRound()
-    for(let i = 0; i < input.length; i++) {
-      console.log(input[i].join(''))
-    }
-    console.log(counter)
+    // for(let i = 0; i < input.length; i++) {
+    //   console.log(input[i].join(''))
+    // }
+    // console.log(counter)
     counter++
   }
   return findOccupiedSeats()
@@ -134,5 +134,6 @@ const findOccupiedSeats = () => {
   return occupiedSeats
 }
 
-
+console.time()
 console.log(runUntilNoChange())
+console.timeEnd()

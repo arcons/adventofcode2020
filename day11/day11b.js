@@ -9,9 +9,9 @@ const occupied = '#'
 
 const setOccupied = (y, x) => {
   // keep track of not occupied seeats
-  if(x == 1 && y == 7) {
-    console.log("error here")
-  }
+  // if(x == 1 && y == 7) {
+  //   console.log("error here")
+  // }
   let notOccCount = 0
   let origX = x
   let origY = y
@@ -378,10 +378,10 @@ const runUntilNoChange = () => {
   while (JSON.stringify(previous) != JSON.stringify(current)) {
     current = input
     previous = runRound()
-    for(let i = 0; i < input.length; i++) {
-      console.log(input[i].join(''))
-    }
-    console.log(" couunter ", counter++)
+    // for(let i = 0; i < input.length; i++) {
+    //   console.log(input[i].join(''))
+    // }
+    // console.log(" couunter ", counter++)
   }
   return findOccupiedSeats()
 }
@@ -398,5 +398,6 @@ const findOccupiedSeats = () => {
   return occupiedSeats
 }
 
-
+console.time()
 console.log(runUntilNoChange())
+console.timeEnd()
