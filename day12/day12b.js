@@ -24,7 +24,7 @@ degreeToDirectionMap.set(270, 'S')
 degreeToDirectionMap.set(0, 'E')
 degreeToDirectionMap.set(180, 'W')
 
-let shipPosition = {x: 0, y: 0, waypointDirection: 'E', waypoint: {x:10, y:1}}
+let shipPosition = {x: 0, y: 0, waypoint: {x:10, y:1}}
 
 const getDegreeToDirection = (direction, degrees) => {
   if(direction == 'L') {
@@ -32,7 +32,7 @@ const getDegreeToDirection = (direction, degrees) => {
   else if(direction == 'R') {
     degrees *= -1
   }
-  let currentDir = (360+ degrees + directionToDegreeMap.get(shipPosition.waypointDirection))%360
+  let currentDir = (360+ degrees)%360
   let curretWaypoint = JSON.parse(JSON.stringify(shipPosition.waypoint))
   switch (currentDir) {
     // N second quadrant
