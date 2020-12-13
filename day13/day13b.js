@@ -2,32 +2,63 @@ const fs = require('fs')
 
 var contents = fs.readFileSync('./day13/input.txt', 'utf8');
 const input = contents.split("\n")
+// const input = [17,'x',13,19]
 
-const firstTimestamp = parseInt(input[0])
-let busIDs = input[1].split(',').filter(x => x != 'x').map(num => parseInt(num))
+let busIDs = input[1].split(',').map(val => Number.isInteger(parseInt(val)) ? parseInt(val) : val)
 
-console.log(firstTimestamp)
-console.log(busIDs)
-
+// value busID and time after T
 let idDepartMap = new Map()
 const creatIDDepartMap = () => {
   for(let i = 0; i< busIDs.length; i++) {
-    const lastLeftAt = firstTimestamp - (firstTimestamp%busIDs[i])
-    idDepartMap.set(busIDs[i], lastLeftAt)
+    if(busIDs[i] === 'x') {
+    } else {
+      idDepartMap.set(busIDs[i], i)
+    }
   }
 }
 
-const findEarliestBus = () => {
-  let minTime = idDepartMap.get(busIDs[0]) + busIDs[0]
-  let minBusId = 0
+let currentTimestamp = 101000000000000;
+// brute force
+const checkIfWorks = () => {
+  let isValid = true
+  let offset = 0
   for(let i = 0; i< busIDs.length; i++) {
-    let tempTime = idDepartMap.get(busIDs[i]) + busIDs[i]
-    if(tempTime < minTime) {
-      minTime = tempTime
-      minBusId = busIDs[i]
+    if(busIDs[i] == 'x') {
+      currentTimestamp++
+    } else {
+      offset = idDepartMap.get(busIDs[i])
+      const currentOffset = ((currentTimestamp+offset)%busIDs[i])
+      // if the currentOffset from timestamp isn't 0 it's invalid
+      // console.log(currentTimestamp, currentOffset, offset, busIDs[i])
+        if(currentOffset != offset) {
+        isValid = false
+        break;
+      } else {
+        currentTimestamp++
+      }
     }
   }
-  return (minTime - firstTimestamp) * minBusId
+  return isValid
+}
+
+const findTimestamp = () => {
+  // busIDs = busIDs.filter(x => x != 'x');
+  while(!checkIfWorks()) {
+    currentTimestamp++;
+    // console.log(currentTimestamp)
+  }
+  return currentTimestamp-busIDs.length
+}
+
+const alphabetArray = "abcdefghijklmnopqrstuvwxyz".split('')
+const outputAllValues = () => {
+  let index=0
+  idDepartMap.forEach((value, key, map) => {
+    console.log(`${key}${alphabetArray[index]} = (y+${value}),`)
+    index++
+  })
 }
 creatIDDepartMap()
-console.log(findEarliestBus())
+// plug in to wolfram alpha
+outputAllValues()
+// console.log(findTimestamp())
