@@ -1,6 +1,6 @@
-const fs = require('fs')
+const fs = require('fs');
  
-var test1contents = fs.readFileSync('./day10/testinput.txt', 'utf8');
+var test1contents = fs.readFileSync('./day10/input.txt', 'utf8');
 var test2contents = fs.readFileSync('./day10/testinput2.txt', 'utf8');
 const input1 = test1contents.split('\n').map(i => parseInt(i))
 const input2 = test2contents.split('\n').map(i => parseInt(i))
@@ -63,20 +63,15 @@ function rFact(num)
 //   return totalCombo
 // }
 
-const isValidJoltage = (removedIndex) => {
-    if((input[removedIndex+1] - input[removedIndex]) === 3) {
-      return true
-    }
-    else if((input[removedIndex+1] - input[removedIndex]) === 2) {
-      return true
-    } 
-    else if((input[removedIndex+1] - input[removedIndex]) === 1) {
-      return true
-
+const isValidJoltage = (testArray) => {
+  let isValid = true
+  for(let i = 1; i< testArray.length; i++) {
+    if((testArray[i+1] - testArray[i]) <= 3) {
     } else {
-      return false
-      
+      isValid = false
     }
+  }
+  return
 }
 
 const findAllCombinations = (input) => {
@@ -86,28 +81,33 @@ const findAllCombinations = (input) => {
   input.push(maxJoltage)
 
   //
-  let comboCount = 0
-  let currentCombo = 0
-  let numTrips = 0
+  let middleLength = 0
+  let totalOptions = 1
+  let oneDiff = false
   for(let i = 0; i< input.length; i++) {
     if((input[i+1] - input[i]) === 3) {
+      if(middleLength >= 1) {
+        let numOptions
+        if(middleLength > 2) {
+          numOptions = middleLength*2+1
+        } else {
+          numOptions = middleLength*2
+        }
+        totalOptions *= numOptions
+      }
+      middleLength = 0
+      oneDiff = false
     };
     if((input[i+1] - input[i]) === 2) {
     };
     if((input[i+1] - input[i]) === 1) {
-      let oneDiffCount = 0
-      while((input[i] - input[i-1]) === 1) {
-        oneDiffCount++
-        i++
+      if(oneDiff) {
+        middleLength++
       }
-      if(oneDiffCount != 0) {
-        currentCombo = rFact(oneDiffCount)
-        oneDiffCount = 0
-      }
-      comboCount += currentCombo
+      oneDiff = true
     };
   }
-  return comboCount * numTrips / 3
+  return totalOptions
 }
 
 console.log(findAllCombinations(input1))

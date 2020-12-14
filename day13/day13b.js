@@ -17,7 +17,7 @@ const creatIDDepartMap = () => {
   }
 }
 
-let currentTimestamp = 101000000000000;
+let currentTimestamp = 100000000000000;
 // brute force
 const checkIfWorks = () => {
   let isValid = true
@@ -53,12 +53,18 @@ const findTimestamp = () => {
 const alphabetArray = "abcdefghijklmnopqrstuvwxyz".split('')
 const outputAllValues = () => {
   let index=0
+  let output =""
   idDepartMap.forEach((value, key, map) => {
-    console.log(`${key}${alphabetArray[index]} = (y+${value}),`)
+    output=output.concat(`${key}${alphabetArray[index]}=(y+${value}), `)
     index++
   })
+  console.log(output)
+  //not encoding for wolfram alapha correctly
+  console.log(encodeURI(`https://www.wolframalpha.com/input/?i=${output}`))
 }
 creatIDDepartMap()
 // plug in to wolfram alpha
-outputAllValues()
-// console.log(findTimestamp())
+// outputAllValues()
+console.time()
+console.log(findTimestamp())
+console.timeEnd()
