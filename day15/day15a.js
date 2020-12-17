@@ -19,10 +19,10 @@ const checkRule = (lastSpoken, turn) => {
 }
 
 const runUntil2020 = () => {
-  let turnCount = 9
+  let turnCount = 5
   input.push(0)
   let lastSpoken = input[input.length-1]
-  while(turnCount <= 2019) {
+  while(turnCount <= 2020) {
     lastSpoken = checkRule(lastSpoken, turnCount)
     if(input.includes(lastSpoken)) {
       input.push(lastSpoken)
