@@ -1,46 +1,55 @@
 
-// let input = [0,3,6]
-// let input = [2,1,3]
-// let input = [1,2,3]
-// let input = [2,3,1]
-// let input = [3,2,1]
-// let input = [3,1,2]
-let input = [16,12,1,0,15,7,11]
+let input = [0,3,6,0]
+// let input = [1,2,3,0]
+// let input = [2,1,3,0]
+// let input = [2,3,1,0]
+// let input = [3,2,1,0]
+// let input = [3,1,2,0]
+// let input = [16,12,1,0,15,7,11,0]
+
+let spokenMap = new Map()
+
+for(let i =0; i< input.length; i++) {
+  spokenMap.set(input[i], {lastSpokenTurn: i+1, prevSpokenTurn: 0})
+}
 
 const checkRule = (lastSpoken, turn) => {
-  const lastSpokenIndex = input.lastIndexOf(lastSpoken)
-  if(input[turn-2] === input[turn-3]) {
+  const lastSpokenTurn = spokenMap.get(lastSpoken).lastSpokenTurn
+  const prevSpoken = spokenMap.get(lastSpoken).prevSpokenTurn
+  if(prevSpoken === lastSpokenTurn-1) {
     return 1
   }
-  input.splice(lastSpokenIndex, 1);
-  const prevSpoken = input.lastIndexOf(lastSpoken)
-  input.splice(lastSpokenIndex, 0, lastSpoken);
-  return (lastSpokenIndex-prevSpoken)
+  return (lastSpokenTurn-prevSpoken)
 }
 
 const runUntil2020 = () => {
-  let turnCount = 9
-  input.push(0)
-  let lastSpoken = input[input.length-1]
-  while(turnCount <= 30000000) {
-    lastSpoken = checkRule(lastSpoken, turnCount)
-    if(input.includes(lastSpoken)) {
-      input.push(lastSpoken)
+  let turnCount = 4
+  let lastSpoken = 0
+  spokenMap.set(0, {lastSpokenTurn: turnCount, prevSpokenTurn: 1})
+  while(turnCount <= 2020) {
+    lastSpoken = checkRule(lastSpoken, turnCount+1)
+    if(spokenMap.has(lastSpoken)) {
+      const prevSpokenTurn = spokenMap.get(lastSpoken).lastSpokenTurn
+      spokenMap.set(lastSpoken, {lastSpokenTurn: turnCount+1, prevSpokenTurn: prevSpokenTurn})
     } else {
-      input.push(lastSpoken)
-      input.push(0)
+      spokenMap.set(lastSpoken, {lastSpokenTurn: turnCount+1, prevSpokenTurn: 0})
       lastSpoken = 0
       turnCount++
+      const prevSpokenTurn = spokenMap.get(lastSpoken).lastSpokenTurn
+      spokenMap.set(lastSpoken, {lastSpokenTurn: turnCount+1, prevSpokenTurn: prevSpokenTurn})
     }
-    // if(input.includes(lastSpoken)) {
-      // const lastSpokenIndex = input.indexOf(lastSpoken)
-      // input.splice(lastSpokenIndex, 1);
-    // }
 
     turnCount++
   }
-  console.log(input[29999999])
-  return input[29999999]
+  let returnVal = 0
+  spokenMap.forEach((val, key, oMap) => {
+    if(val.lastSpokenTurn === 2020) {
+      returnVal = key
+      console.log("2020", key)
+      return
+    }
+  })
+  return returnVal
 }
 
 console.log(runUntil2020())
