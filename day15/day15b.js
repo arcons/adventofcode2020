@@ -1,11 +1,11 @@
 
-let input = [0,3,6,0]
+// let input = [0,3,6,0]
 // let input = [1,2,3,0]
 // let input = [2,1,3,0]
 // let input = [2,3,1,0]
 // let input = [3,2,1,0]
 // let input = [3,1,2,0]
-// let input = [16,12,1,0,15,7,11,0]
+let input = [16,12,1,0,15,7,11]
 
 let spokenMap = new Map()
 
@@ -23,10 +23,10 @@ const checkRule = (lastSpoken, turn) => {
 }
 
 const runUntil2020 = () => {
-  let turnCount = 4
+  let turnCount = 8
   let lastSpoken = 0
-  spokenMap.set(0, {lastSpokenTurn: turnCount, prevSpokenTurn: 1})
-  while(turnCount <= 2020) {
+  spokenMap.set(0, {lastSpokenTurn: turnCount, prevSpokenTurn: 4})
+  while(turnCount <= 30000000) {
     lastSpoken = checkRule(lastSpoken, turnCount+1)
     if(spokenMap.has(lastSpoken)) {
       const prevSpokenTurn = spokenMap.get(lastSpoken).lastSpokenTurn
@@ -43,7 +43,7 @@ const runUntil2020 = () => {
   }
   let returnVal = 0
   spokenMap.forEach((val, key, oMap) => {
-    if(val.lastSpokenTurn === 2020) {
+    if(val.lastSpokenTurn === 30000000) {
       returnVal = key
       console.log("2020", key)
       return
