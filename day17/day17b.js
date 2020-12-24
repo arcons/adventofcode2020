@@ -91,7 +91,6 @@ const increaseZVal = (cubeStates, zVal) => {
     for(let i = 0; i < input[0].length; i++) {
       emptyCube.push(emptyZ)
     }
-    // add in empty w array
     wCube.push(emptyCube)
     wCube.push(cubeStates)
     wCube.push(emptyCube)
@@ -106,8 +105,10 @@ const increaseZVal = (cubeStates, zVal) => {
           cubeStates[k][j][i].unshift(false)
         }
       }
-      emptyRow = JSON.parse(JSON.stringify(cubeStates[0][0][0])).map(val => false)
       // create an empty cube copy
+    }
+    emptyRow = JSON.parse(JSON.stringify(cubeStates[0][0][0])).map(val => false)
+    for(let k = 0; k< initLength; k++) {
       for(let n = 0; n < initLength; n++) {
         // add the empty z coordinates
         console.log(n)
@@ -137,8 +138,6 @@ const increaseZVal = (cubeStates, zVal) => {
     wCube.unshift(emptyZCube)
     wCube.push(emptyZCube)
     }
-
-
   return wCube
 }
 
