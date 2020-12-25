@@ -1,6 +1,6 @@
 const fs = require('fs')
  
-var contents = fs.readFileSync('./day17/testinput.txt', 'utf8');
+var contents = fs.readFileSync('./day17/input.txt', 'utf8');
 // example parse
 const input = contents.split(/\n/).map(val => val.split(''))
 console.log(input)
@@ -11,7 +11,6 @@ console.log(input)
 const getActiveNeighbors = (cubeStates, xVal, yVal, zVal, wVal) => {
   let activeCount = 0
   let inactiveCount = 0
-  console.log(xVal,yVal,zVal, wVal)
   for(let i = xVal-1; i <= xVal+1; i++) {
     for(let j = yVal-1; j <= yVal+1; j++) {
       for(let k = zVal-1; k <= zVal+1; k++) {
@@ -96,11 +95,13 @@ const increaseZVal = (cubeStates, zVal) => {
     wCube.push(emptyCube)
   }
   else {
+    const zwLength = cubeStates.length
     const xyLength = cubeStates[0][0][0].length
-    for(let k = 0; k< initLength; k++) {
-      for(let j=0; j< initLength; j++) {
+    for(let k = 0; k < zwLength; k++) {
+      for(let j=0; j < initLength; j++) {
         for(let i = 0; i< xyLength; i++) {
           // add in the empty rows
+          console.log(k, j, i)
           cubeStates[k][j][i].push(false)
           cubeStates[k][j][i].unshift(false)
         }
@@ -108,7 +109,7 @@ const increaseZVal = (cubeStates, zVal) => {
       // create an empty cube copy
     }
     emptyRow = JSON.parse(JSON.stringify(cubeStates[0][0][0])).map(val => false)
-    for(let k = 0; k< initLength; k++) {
+    for(let k = 0; k< zwLength; k++) {
       for(let n = 0; n < initLength; n++) {
         // add the empty z coordinates
         console.log(n)
@@ -124,7 +125,7 @@ const increaseZVal = (cubeStates, zVal) => {
     }
 
     // append these to all of the z cubes
-    for(let k = 0; k< initLength; k++) {
+    for(let k = 0; k< zwLength; k++) {
       cubeStates[k].unshift(emptyXYCube)
       cubeStates[k].push(emptyXYCube)
     }
@@ -132,7 +133,7 @@ const increaseZVal = (cubeStates, zVal) => {
       emptyZCube.push(emptyXYCube)
     }
     // append to all of the w cubes
-    for(let i = 0; i < initLength; i++) {
+    for(let i = 0; i < cubeStates.length; i++) {
       wCube.push(cubeStates[i])
     }
     wCube.unshift(emptyZCube)
