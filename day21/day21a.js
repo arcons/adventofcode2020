@@ -1,6 +1,6 @@
 const fs = require('fs')
  
-var contents = fs.readFileSync('./day21/testinput.txt', 'utf8');
+var contents = fs.readFileSync('./day21/input.txt', 'utf8');
 // example parse
 const input = contents.split(/\n/).map(str => str.split('('))
 
