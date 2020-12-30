@@ -33,7 +33,6 @@ const buildFoodList = () => {
   foodAllergenMap.forEach((val, key, map) => {
     foodOrgnaized.push(key)
   })
-  //
   let FOSet = [...foodOrgnaized.sort()]
   let all = []
   FOSet.forEach(val => {
@@ -41,7 +40,7 @@ const buildFoodList = () => {
     all.push([...foodAllergenMap.get(val)])
   })
   all = all.flat()
-  console.log(all.join(','))
+  // console.log(all.join(','))
 
   // let testSet = new Set([...all])
 
@@ -62,8 +61,8 @@ const buildFoodList = () => {
 
   let foodContains = []
   let sortedMap = new Map([...foodAllergenMap.entries()].sort());
-  while(foodContains.length <= foodAllergenMap.size) {
-    foodAllergenMap.forEach((val, key, map) => {
+  while(foodContains.length <= sortedMap.size) {
+    sortedMap.forEach((val, key, map) => {
       if(val.size === 1) {
         const allergy = [...val][0]
         const keyAll = {key, allergy}
