@@ -32,8 +32,6 @@ const buildFoodList = () => {
   foodAllergenMap.forEach((val, key, map) => {
     foodOrgnaized.push(key)
   })
-  //
-  let all = []
 
   let foodContains = []
   while(foodContains.length <= foodAllergenMap.size) {
@@ -52,6 +50,21 @@ const buildFoodList = () => {
       }
     })
   }
+  foodAllergenMap.forEach((val, key, map) => {
+    if(val.size === 1) {
+      const allergy = [...val][0]
+      const keyAll = {key, allergy}
+      map.forEach((food, allergen, currMap) => {
+        if(food.has(allergy) && food.size !== 1) {
+          food.delete(allergy)
+        }
+      })
+      if(!foodContains.includes(keyAll)){
+        foodContains.push({key, allergy})
+      }
+    }
+  })
+  let all = []
   foodContains = []
   let sortedMap = new Map([...foodAllergenMap.entries()].sort());
   sortedMap.forEach((val, key, map) => {
