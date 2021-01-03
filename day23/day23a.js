@@ -23,7 +23,7 @@ const runMove = (current, pos) => {
 const run100 = () => {
   let finalVal = input.toString().split('').map(val => parseInt(val))
   finalVal = runMove(finalVal, 0)
-  for(let i = 0; i<(10000000-1); i++) {
+  for(let i = 0; i<99; i++) {
     console.log("Run number", i)
     finalVal = runMove(finalVal, 1)
   }
