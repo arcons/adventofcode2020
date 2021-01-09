@@ -17,16 +17,16 @@ const runRound = (p1, p2) => {
   p1.shift()
   p2.shift()
   if(p1.length >= p1Card && p2.length >= p2Card) {
-    let winner = getWinningPlayer(p1,p2)
+    let winner = getWinningPlayer(JSON.parse(JSON.stringify(p1)),JSON.parse(JSON.stringify(p2)))
     // normal round
     if(winner.oneWin) {
       p1.push(p1Card)
       p1.push(p2Card)
-      // console.log("p1 win")
+      // console.log("p1 win recursion")
     } else {
       p2.push(p2Card)
       p2.push(p1Card)
-      // console.log("p2 win")
+      // console.log("p2 win recursion")
     }
   } else {
     // normal round
@@ -43,30 +43,31 @@ const runRound = (p1, p2) => {
   return {p1, p2}
 }
 
-const getWinningPlayer = (p1, p2) => {
-  let previousMatchups = new Set()
-  let playerOne = p1.concat()
-  let playerTwo = p2.concat()
-  // let roundCount = 0
+const getWinningPlayer = (playerOne, playerTwo, previousMatchups = new Set()) => {
+  let roundCount = 1
   let badLoop = false;
   while(playerOne.length !== 0 && playerTwo.length !== 0) {
-    // if(roundCount === 4) {
-    //   console.log("bork")
-    // }
-    // roundCount++
-    const currentRound = JSON.stringify({playerOne, playerTwo})
+    roundCount++
+    let currentRound = JSON.stringify({playerOne, playerTwo})
     if(previousMatchups.has(currentRound)) {
       badLoop = true
       console.log("Player one wins on break")
-      break;
+      return {playerOne, oneWin:true}
     } else {
       previousMatchups.add(currentRound)
+      roundResults = runRound(playerOne, playerTwo, previousMatchups)
+      playerOne = roundResults.p1
+      playerTwo = roundResults.p2
     }
-    roundResults = runRound(playerOne, playerTwo)
-    playerOne = roundResults.p1
-    playerTwo = roundResults.p2
+    // if(previousMatchups.has(currentRound)) {
+    //   badLoop = true
+    //   console.log("Player one wins on break 2")
+    //   break;
+    // } else {
+    //   previousMatchups.add(currentRound)
+    // }
   }
-  let winner = (playerTwo.length === 0 || badLoop) ? {playerOne, oneWin:true} : {playerOne:playerTwo, oneWin:false}
+  let winner = (playerTwo.length === 0) ? {playerOne, oneWin:true} : {playerOne:playerTwo, oneWin:false}
   return winner
 }
 

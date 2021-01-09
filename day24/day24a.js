@@ -11,19 +11,18 @@ const input = contents.split(/\n/)
 let tileMap = new Map()
 let directionSet = new Set(["e", "se", "sw", "w", "nw", "ne"])
 const findTilePosition = (directions) => {
-  // let tilePos = {"e":0, "se":0, "sw":0, "w":0, "nw":0, "ne":0}
   let tilePos = {"e":0, "s":0, "n":0, "w":0}
   console.log(directions)
   while(directions.length !== 0) {
     let nextMove = directions.slice(0,2)
     if(directionSet.has(nextMove) && nextMove.length > 1) {
-      tilePos[nextMove[0]]+=.5
-      tilePos[nextMove[1]]+=.5
+      tilePos[nextMove[0]]+=1
+      tilePos[nextMove[1]]+=1
       // tilePos[nextMove]++
       directions = directions.slice(2)
     } else {
       nextMove = directions.slice(0,1)
-      tilePos[nextMove]++
+      tilePos[nextMove]+=2
       directions = directions.slice(1)
     }
   }

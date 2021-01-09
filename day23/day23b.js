@@ -1,4 +1,4 @@
-let input = 219748365
+const input = 389125467
 
 const runMove = (current, pos) => {
   const originalOrder = JSON.parse(JSON.stringify(current))
@@ -19,12 +19,25 @@ const runMove = (current, pos) => {
   // console.log("Current", current)
   return current
 }
+///
+// number 9999997
+// Current [
+//   9, 8, 3, 4, 6,
+//   5, 2, 1, 7
+// ]
+// Run number 9999998
+// Current [
+//   8, 5, 2, 1, 7,
+//   3, 4, 6, 9
+// ]
+// 8,5,2,1,7,3,4,6,9
 
 const run100 = () => {
   let finalVal = input.toString().split('').map(val => parseInt(val))
+  // this needs to be bumped to 1000000 values...
   finalVal = runMove(finalVal, 0)
   for(let i = 0; i<(10000000-1); i++) {
-    console.log("Run number", i)
+    // console.log("Run number", i)
     finalVal = runMove(finalVal, 1)
   }
   return finalVal.join();

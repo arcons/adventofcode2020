@@ -16,8 +16,6 @@ const buildRuleMap = () => {
   })
 }
 buildRuleMap()
-var ruleIndex = 0
-
 
 // rule index was not incremented on next evaluation
 const getValidSubRule = (nextRule, msg, ruleIndex, isValid) => {
@@ -46,13 +44,18 @@ const getValidSubRule = (nextRule, msg, ruleIndex, isValid) => {
     return (firstRule || secondRule)
   }
   else {
-    nextRule.forEach(subRule => {
-      isValid = getValidSubRule(subRule, msg, ruleIndex, isValid)
-      ruleIndex++
-      if(!isValid) {
-        return;
+    if(nextRule[0] == '3' && nextRule[1] == '2') {
+      console.log("3 2")
+    }
+    for(let i = 0; i< nextRule.length; i++) {
+      console.log(nextRule)
+      let validMessage = getValidSubRule(nextRule[i], msg, ruleIndex, isValid)
+      if(!validNumber) {
+        break
       }
-    });
+      isValid = validNumber
+      ruleIndex=newIndex
+    }
   }
   return isValid
 }
